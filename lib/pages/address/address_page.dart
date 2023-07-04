@@ -25,101 +25,101 @@ class AddressPage extends StatelessWidget {
           color: MyColor.black,
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          children: [
-            const SizedBox(height: 10),
-            Form(
-              key: _globalKey,
-              child: Column(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              Form(
+                key: _globalKey,
+                child: Column(
+                  children: [
+                    EdtText(
+                      textInputType: TextInputType.name,
+                      textInputAction: TextInputAction.next,
+                      label: 'نام و نام خانوادگی',
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'نام خود را وارد کنید';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    EdtText(
+                      textInputType: TextInputType.name,
+                      textInputAction: TextInputAction.next,
+                      label: 'کد پستی',
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'کدپستی خود را وارد کنید';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    EdtText(
+                      textInputType: TextInputType.phone,
+                      textInputAction: TextInputAction.next,
+                      label: 'شماره تلفن',
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'شماره تلفن خود را وارد کنید';
+                        }
+                        if (value.length != 11) {
+                          return 'شماره تلفن اشتباه است';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    EdtText(
+                      textInputType: TextInputType.streetAddress,
+                      textInputAction: TextInputAction.done,
+                      label: 'آدرس تحویل گیرنده',
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'آدرس خود را وارد کنید';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              ShoppingDetail(cartList: cartList),
+              const SizedBox(height: 10),
+              Row(
                 children: [
-                  EdtText(
-                    textInputType: TextInputType.name,
-                    textInputAction: TextInputAction.next,
-                    label: 'نام و نام خانوادگی',
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'نام خود را وارد کنید';
-                      }
-                      return null;
-                    },
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: TextBtn(
+                      backgroundColor: MyColor.white,
+                      foregroundColor: MyColor.blue,
+                      radius: 5,
+                      child: const Text('پرداخت در محل'),
+                      ontap: () {
+                        if (_globalKey.currentState!.validate()) {}
+                      },
+                    ),
                   ),
-                  const SizedBox(height: 10),
-                  EdtText(
-                    textInputType: TextInputType.name,
-                    textInputAction: TextInputAction.next,
-                    label: 'کد پستی',
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'کدپستی خود را وارد کنید';
-                      }
-                      return null;
-                    },
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: TextBtn(
+                      backgroundColor: MyColor.blue,
+                      foregroundColor: MyColor.white,
+                      radius: 5,
+                      child: const Text('پرداخت اینترنتی'),
+                      ontap: () {},
+                    ),
                   ),
-                  const SizedBox(height: 10),
-                  EdtText(
-                    textInputType: TextInputType.phone,
-                    textInputAction: TextInputAction.next,
-                    label: 'شماره تلفن',
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'شماره تلفن خود را وارد کنید';
-                      }
-                      if (value.length != 11) {
-                        return 'شماره تلفن اشتباه است';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  EdtText(
-                    textInputType: TextInputType.streetAddress,
-                    textInputAction: TextInputAction.done,
-                    label: 'آدرس تحویل گیرنده',
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'آدرس خود را وارد کنید';
-                      }
-                      return null;
-                    },
-                  ),
+                  const SizedBox(width: 20),
                 ],
               ),
-            ),
-            const SizedBox(height: 10),
-            ShoppingDetail(cartList: cartList),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                const SizedBox(width: 20),
-                Expanded(
-                  child: TextBtn(
-                    backgroundColor: MyColor.white,
-                    foregroundColor: MyColor.blue,
-                    radius: 5,
-                    child: const Text('پرداخت در محل'),
-                    ontap: () {
-                      if (_globalKey.currentState!.validate()) {
-                        print('ok');
-                      }
-                    },
-                  ),
-                ),
-                const SizedBox(width: 20),
-                Expanded(
-                  child: TextBtn(
-                    backgroundColor: MyColor.blue,
-                    foregroundColor: MyColor.white,
-                    radius: 5,
-                    child: const Text('پرداخت اینترنتی'),
-                    ontap: () {},
-                  ),
-                ),
-                const SizedBox(width: 20),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
