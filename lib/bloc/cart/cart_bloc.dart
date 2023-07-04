@@ -2,13 +2,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nike_shop/bloc/cart/cart_event.dart';
 import 'package:nike_shop/bloc/cart/cart_state.dart';
 import 'package:nike_shop/data/repositories/cart_repository.dart';
-import 'package:nike_shop/di.dart';
 import 'package:nike_shop/utils/shared_pref.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
-  final ICartRepository _repository = locator.get();
+  final ICartRepository _repository;
 
-  CartBloc() : super(InitCartState()) {
+  CartBloc(this._repository) : super(InitCartState()) {
     on<GetAllCartEvent>((event, emit) async {
       if (SharedPref.getString(key: 'token').isEmpty) {
         emit(UnAuthCartState('لطفا وارد حساب کاربری خود شوید'));

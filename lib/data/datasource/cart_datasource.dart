@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:nike_shop/constants/api.dart';
-import 'package:nike_shop/di.dart';
 import 'package:nike_shop/models/cart.dart';
 import 'package:nike_shop/utils/error_handler/app_exceptions.dart';
 import 'package:nike_shop/utils/error_handler/check_exceptions.dart';
@@ -14,7 +13,9 @@ abstract class CartDatasource {
 }
 
 class CartRemote implements CartDatasource {
-  final Dio _dio = locator.get();
+  CartRemote(this._dio);
+
+  final Dio _dio;
 
   @override
   Future<void> addCart({required int productId}) async {

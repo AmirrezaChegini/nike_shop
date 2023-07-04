@@ -3,15 +3,15 @@ import 'package:nike_shop/bloc/home/home_event.dart';
 import 'package:nike_shop/bloc/home/home_state.dart';
 import 'package:nike_shop/data/repositories/banner_repository.dart';
 import 'package:nike_shop/data/repositories/products_repository.dart';
-import 'package:nike_shop/di.dart';
 import 'package:nike_shop/models/my_banner.dart';
 import 'package:nike_shop/models/product.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final IBannerRepository _bannerRepository = locator.get();
-  final IProductsRepository _productsRepository = locator.get();
+  final IBannerRepository _bannerRepository;
+  final IProductsRepository _productsRepository;
 
-  HomeBloc() : super(LoadingHomeState()) {
+  HomeBloc(this._bannerRepository, this._productsRepository)
+      : super(LoadingHomeState()) {
     on<HomeEvent>((event, emit) async {
       emit(LoadingHomeState());
 

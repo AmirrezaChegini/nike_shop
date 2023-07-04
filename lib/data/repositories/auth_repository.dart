@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:nike_shop/data/datasource/auth_datasource.dart';
-import 'package:nike_shop/di.dart';
 import 'package:nike_shop/models/auth_token.dart';
 import 'package:nike_shop/utils/error_handler/app_exceptions.dart';
 import 'package:nike_shop/utils/shared_pref.dart';
@@ -12,7 +11,9 @@ abstract class IAuthRepository {
 }
 
 class AuthRepository implements IAuthRepository {
-  final AuthDatasource _datasource = locator.get();
+  AuthRepository(this._datasource);
+
+  final AuthDatasource _datasource;
 
   @override
   Future<Either<String, String>> register(String email, String password) async {

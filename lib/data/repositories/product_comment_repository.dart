@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:nike_shop/data/datasource/product_comment_datasource.dart';
-import 'package:nike_shop/di.dart';
 import 'package:nike_shop/models/product_comment.dart';
 import 'package:nike_shop/utils/error_handler/app_exceptions.dart';
 
@@ -10,7 +9,9 @@ abstract class IProductCommentRepository {
 }
 
 class ProductCommentRepository implements IProductCommentRepository {
-  final ProductCommentDatasource _datasource = locator.get();
+  ProductCommentRepository(this._datasource);
+
+  final ProductCommentDatasource _datasource;
 
   @override
   Future<Either<String, List<ProductComment>>> getComments(

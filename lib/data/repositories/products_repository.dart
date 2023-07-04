@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:nike_shop/data/datasource/products_datasource.dart';
-import 'package:nike_shop/di.dart';
 import 'package:nike_shop/models/product.dart';
 import 'package:nike_shop/utils/error_handler/app_exceptions.dart';
 
@@ -9,7 +8,8 @@ abstract class IProductsRepository {
 }
 
 class ProductsRepository implements IProductsRepository {
-  final ProductsDatasource _datasource = locator.get();
+  ProductsRepository(this._datasource);
+  final ProductsDatasource _datasource;
 
   @override
   Future<Either<String, List<Product>>> getProducts(

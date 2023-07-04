@@ -2,12 +2,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nike_shop/bloc/comment/comment_event.dart';
 import 'package:nike_shop/bloc/comment/comment_state.dart';
 import 'package:nike_shop/data/repositories/product_comment_repository.dart';
-import 'package:nike_shop/di.dart';
 
 class CommentBloc extends Bloc<CommentEvent, CommentState> {
-  final IProductCommentRepository _repository = locator.get();
+  final IProductCommentRepository _repository;
 
-  CommentBloc() : super(LoadingCommentState()) {
+  CommentBloc(this._repository) : super(LoadingCommentState()) {
     on<CommentEvent>((event, emit) async {
       emit(LoadingCommentState());
       await Future.delayed(const Duration(seconds: 1));

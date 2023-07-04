@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:nike_shop/constants/api.dart';
-import 'package:nike_shop/di.dart';
 import 'package:nike_shop/models/product.dart';
 import 'package:nike_shop/utils/error_handler/app_exceptions.dart';
 import 'package:nike_shop/utils/error_handler/check_exceptions.dart';
@@ -11,7 +10,9 @@ abstract class ProductsDatasource {
 }
 
 class ProductsRemote implements ProductsDatasource {
-  final Dio _dio = locator.get();
+  ProductsRemote(this._dio);
+
+  final Dio _dio;
 
   @override
   Future<List<Product>> getProducts(

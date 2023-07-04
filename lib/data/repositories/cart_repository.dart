@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:nike_shop/data/datasource/cart_datasource.dart';
-import 'package:nike_shop/di.dart';
 import 'package:nike_shop/models/cart.dart';
 import 'package:nike_shop/utils/error_handler/app_exceptions.dart';
 
@@ -13,7 +12,9 @@ abstract class ICartRepository {
 }
 
 class CartRepositoy implements ICartRepository {
-  final CartDatasource _datasource = locator.get();
+  CartRepositoy(this._datasource);
+
+  final CartDatasource _datasource;
   @override
   Future<Either<String, String>> addCart({required int productId}) async {
     try {

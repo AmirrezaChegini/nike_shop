@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:nike_shop/constants/api.dart';
-import 'package:nike_shop/di.dart';
 import 'package:nike_shop/models/product_comment.dart';
 import 'package:nike_shop/utils/error_handler/app_exceptions.dart';
 import 'package:nike_shop/utils/error_handler/check_exceptions.dart';
@@ -10,7 +9,9 @@ abstract class ProductCommentDatasource {
 }
 
 class ProductCommentRemote implements ProductCommentDatasource {
-  final Dio _dio = locator.get();
+  ProductCommentRemote(this._dio);
+
+  final Dio _dio;
 
   @override
   Future<List<ProductComment>> getComments({required int productId}) async {

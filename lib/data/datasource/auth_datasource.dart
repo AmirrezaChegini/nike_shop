@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:nike_shop/constants/api.dart';
 import 'package:nike_shop/constants/api_post.dart';
-import 'package:nike_shop/di.dart';
 import 'package:nike_shop/models/auth_token.dart';
 import 'package:nike_shop/utils/error_handler/app_exceptions.dart';
 import 'package:nike_shop/utils/error_handler/check_exceptions.dart';
@@ -13,7 +12,9 @@ abstract class AuthDatasource {
 }
 
 class AuthRemote implements AuthDatasource {
-  final Dio _dio = locator.get();
+  AuthRemote(this._dio);
+
+  final Dio _dio;
 
   @override
   Future<void> register(String email, String password) async {

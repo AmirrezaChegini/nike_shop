@@ -2,12 +2,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nike_shop/bloc/auth/auth_event.dart';
 import 'package:nike_shop/bloc/auth/auth_state.dart';
 import 'package:nike_shop/data/repositories/auth_repository.dart';
-import 'package:nike_shop/di.dart';
 
 class LoginAuthBloc extends Bloc<AuthEvent, LoginAuthState> {
-  final IAuthRepository _repository = locator.get();
+  final IAuthRepository _repository;
 
-  LoginAuthBloc() : super(InitLoginState()) {
+  LoginAuthBloc(this._repository) : super(InitLoginState()) {
     on<LoginAuthEvent>((event, emit) async {
       emit(LoadingLoginState());
       await Future.delayed(const Duration(seconds: 1));
@@ -23,9 +22,9 @@ class LoginAuthBloc extends Bloc<AuthEvent, LoginAuthState> {
 }
 
 class RegisterAuthBloc extends Bloc<AuthEvent, RegisterAuthState> {
-  final IAuthRepository _repository = locator.get();
+  final IAuthRepository _repository;
 
-  RegisterAuthBloc() : super(InitRegisterState()) {
+  RegisterAuthBloc(this._repository) : super(InitRegisterState()) {
     on<RegisterAuthEvent>((event, emit) async {
       emit(LoadingRegisterState());
       await Future.delayed(const Duration(seconds: 1));
