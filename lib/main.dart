@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:nike_shop/bloc/auth/auth_bloc.dart';
@@ -13,11 +14,11 @@ import 'package:nike_shop/cubit/edt_pass_cubti.dart';
 import 'package:nike_shop/cubit/fab_cubit.dart';
 import 'package:nike_shop/cubit/type_product_cubit.dart';
 import 'package:nike_shop/di.dart';
-import 'package:nike_shop/pages/address/address_page.dart';
 import 'package:nike_shop/pages/main_wrapper/main_wrapper_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await initLocator();
   runApp(const MainApp());
 }
