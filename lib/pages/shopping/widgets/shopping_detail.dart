@@ -5,9 +5,14 @@ import 'package:nike_shop/utils/extensions/discount_price.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
 class ShoppingDetail extends StatelessWidget {
-  const ShoppingDetail({super.key, required this.cartList});
+  const ShoppingDetail({
+    super.key,
+    required this.cartList,
+    this.bottom = 0,
+  });
 
   final List<Cart> cartList;
+  final double bottom;
 
   int totalPrice() {
     return cartList.fold(0, (i, e) => i + (e.price * e.count));
@@ -16,7 +21,7 @@ class ShoppingDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 100),
+      padding: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: bottom),
       child: Material(
         borderRadius: BorderRadius.circular(3),
         elevation: 2,

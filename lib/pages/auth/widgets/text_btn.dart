@@ -7,11 +7,15 @@ class TextBtn extends StatelessWidget {
     required this.foregroundColor,
     required this.child,
     required this.ontap,
+    this.height = 0,
+    this.radius = 0,
   });
 
   final Color backgroundColor;
   final Color foregroundColor;
   final Widget child;
+  final double height;
+  final double radius;
   final Function() ontap;
 
   @override
@@ -21,9 +25,9 @@ class TextBtn extends StatelessWidget {
       style: TextButton.styleFrom(
         backgroundColor: backgroundColor,
         foregroundColor: foregroundColor,
-        minimumSize: const Size.fromHeight(60),
+        minimumSize: Size.fromHeight(height),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(radius),
         ),
         textStyle: const TextStyle(
           fontFamily: 'iranyekan',

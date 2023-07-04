@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nike_shop/bloc/cart/cart_bloc.dart';
+import 'package:nike_shop/bloc/cart/cart_event.dart';
 import 'package:nike_shop/bloc/cart/cart_state.dart';
 import 'package:nike_shop/constants/my_color.dart';
 import 'package:nike_shop/cubit/fab_cubit.dart';
+import 'package:nike_shop/pages/address/address_page.dart';
 import 'package:nike_shop/pages/shopping/widgets/cart_item.dart';
 import 'package:nike_shop/pages/shopping/widgets/shopping_detail.dart';
 import 'package:nike_shop/widgets/fab.dart';
@@ -22,12 +24,23 @@ class ShoppingPage extends StatelessWidget {
         centerTitle: true,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: BlocBuilder<FabShopCubit, bool>(
+      floatingActionButton: BlocBuilder<CartBloc, CartState>(
         builder: (context, state) => Visibility(
-          visible: state,
+          visible: state is DataCartState,
           child: Fab(
             title: 'ادامه فرایند خرید',
-            ontap: () {},
+            ontap: () {
+              var state = BlocProvider.of<CartBloc>(context).state;
+
+              if (state is DataCartState) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          AddressPage(cartList: state.cartList),
+                    ));
+              }
+            },
           ),
         ),
       ),
@@ -43,7 +56,9 @@ class ShoppingPage extends StatelessWidget {
           if (state is FailedCartState) {
             return Center(
               child: RefreshBtn(
-                onTap: () {},
+                onTap: () {
+                  BlocProvider.of<CartBloc>(context).add(GetAllCartEvent());
+                },
               ),
             );
           }
@@ -81,6 +96,7 @@ class ShoppingPage extends StatelessWidget {
                 SliverToBoxAdapter(
                   child: ShoppingDetail(
                     cartList: state.cartList,
+                    bottom: 100,
                   ),
                 ),
               ],

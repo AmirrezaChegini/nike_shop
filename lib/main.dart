@@ -13,6 +13,7 @@ import 'package:nike_shop/cubit/edt_pass_cubti.dart';
 import 'package:nike_shop/cubit/fab_cubit.dart';
 import 'package:nike_shop/cubit/type_product_cubit.dart';
 import 'package:nike_shop/di.dart';
+import 'package:nike_shop/pages/address/address_page.dart';
 import 'package:nike_shop/pages/main_wrapper/main_wrapper_page.dart';
 
 void main() async {

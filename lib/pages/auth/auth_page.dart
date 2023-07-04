@@ -8,7 +8,7 @@ import 'package:nike_shop/bloc/cart/cart_event.dart';
 import 'package:nike_shop/constants/my_color.dart';
 import 'package:nike_shop/cubit/auth_cubit.dart';
 import 'package:nike_shop/cubit/edt_pass_cubti.dart';
-import 'package:nike_shop/pages/auth/widgets/edt_text.dart';
+import 'package:nike_shop/widgets/edt_text.dart';
 import 'package:nike_shop/pages/auth/widgets/text_btn.dart';
 import 'package:nike_shop/widgets/loading_anim.dart';
 import 'package:nike_shop/widgets/my_snackbar.dart';
@@ -126,6 +126,8 @@ class _AuthPageState extends State<AuthPage> {
                       return TextBtn(
                         backgroundColor: MyColor.white,
                         foregroundColor: MyColor.dark,
+                        height: 60,
+                        radius: 15,
                         child: const Text('ورود'),
                         ontap: () {
                           if (_globalKey.currentState!.validate()) {
@@ -140,6 +142,8 @@ class _AuthPageState extends State<AuthPage> {
                       return TextBtn(
                         backgroundColor: MyColor.white,
                         foregroundColor: MyColor.dark,
+                        height: 60,
+                        radius: 15,
                         child: const Text('ورود'),
                         ontap: () {
                           if (_globalKey.currentState!.validate()) {
@@ -154,6 +158,8 @@ class _AuthPageState extends State<AuthPage> {
                       return TextBtn(
                         backgroundColor: MyColor.white,
                         foregroundColor: MyColor.dark,
+                        height: 60,
+                        radius: 15,
                         child: const LoadingAnim(color: MyColor.dark),
                         ontap: () {},
                       );
@@ -162,6 +168,8 @@ class _AuthPageState extends State<AuthPage> {
                     return TextBtn(
                       backgroundColor: MyColor.white,
                       foregroundColor: MyColor.dark,
+                      height: 60,
+                      radius: 15,
                       child: const Text('ورود'),
                       ontap: () {
                         if (_globalKey.currentState!.validate()) {
@@ -189,6 +197,8 @@ class _AuthPageState extends State<AuthPage> {
                       return TextBtn(
                         backgroundColor: MyColor.dark,
                         foregroundColor: MyColor.white,
+                        height: 60,
+                        radius: 15,
                         child: const Text('ثبت نام'),
                         ontap: () {
                           if (_globalKey.currentState!.validate()) {
@@ -203,6 +213,8 @@ class _AuthPageState extends State<AuthPage> {
                       return TextBtn(
                         backgroundColor: MyColor.dark,
                         foregroundColor: MyColor.white,
+                        height: 60,
+                        radius: 15,
                         child: const LoadingAnim(color: MyColor.white),
                         ontap: () {},
                       );
@@ -212,6 +224,8 @@ class _AuthPageState extends State<AuthPage> {
                       return TextBtn(
                         backgroundColor: MyColor.dark,
                         foregroundColor: MyColor.white,
+                        height: 60,
+                        radius: 15,
                         child: const Text('ثبت نام'),
                         ontap: () {
                           if (_globalKey.currentState!.validate()) {
@@ -225,6 +239,8 @@ class _AuthPageState extends State<AuthPage> {
                     return TextBtn(
                       backgroundColor: MyColor.dark,
                       foregroundColor: MyColor.white,
+                      height: 60,
+                      radius: 15,
                       child: const Text('ثبت نام'),
                       ontap: () {
                         if (_globalKey.currentState!.validate()) {
