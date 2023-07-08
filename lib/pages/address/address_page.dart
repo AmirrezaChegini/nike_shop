@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:nike_shop/constants/my_color.dart';
 import 'package:nike_shop/models/cart.dart';
 import 'package:nike_shop/pages/auth/widgets/text_btn.dart';
+import 'package:nike_shop/pages/reciept_payment/reciept_payment.dart';
 import 'package:nike_shop/pages/shopping/widgets/shopping_detail.dart';
+import 'package:nike_shop/utils/extensions/total_price.dart';
 import 'package:nike_shop/widgets/edt_text.dart';
 import 'package:nike_shop/widgets/my_appbar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+// ignore: must_be_immutable
 class AddressPage extends StatelessWidget {
   AddressPage({
     super.key,
@@ -13,6 +17,10 @@ class AddressPage extends StatelessWidget {
   });
   final List<Cart> cartList;
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
+  String name = '';
+  String postalCode = '';
+  String phone = '';
+  String address = '';
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +51,7 @@ class AddressPage extends StatelessWidget {
                         if (value.isEmpty) {
                           return 'نام خود را وارد کنید';
                         }
+                        name = value;
                         return null;
                       },
                     ),
@@ -55,6 +64,7 @@ class AddressPage extends StatelessWidget {
                         if (value.isEmpty) {
                           return 'کدپستی خود را وارد کنید';
                         }
+                        postalCode = value;
                         return null;
                       },
                     ),
@@ -70,6 +80,7 @@ class AddressPage extends StatelessWidget {
                         if (value.length != 11) {
                           return 'شماره تلفن اشتباه است';
                         }
+                        phone = value;
                         return null;
                       },
                     ),
@@ -82,6 +93,7 @@ class AddressPage extends StatelessWidget {
                         if (value.isEmpty) {
                           return 'آدرس خود را وارد کنید';
                         }
+                        address = value;
                         return null;
                       },
                     ),
@@ -101,7 +113,16 @@ class AddressPage extends StatelessWidget {
                       radius: 5,
                       child: const Text('پرداخت در محل'),
                       ontap: () {
-                        if (_globalKey.currentState!.validate()) {}
+                        if (_globalKey.currentState!.validate()) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RecieptPaymentPage(
+                                paymentPrice: cartList.getTotalPrice(),
+                              ),
+                            ),
+                          );
+                        }
                       },
                     ),
                   ),
@@ -112,7 +133,13 @@ class AddressPage extends StatelessWidget {
                       foregroundColor: MyColor.white,
                       radius: 5,
                       child: const Text('پرداخت اینترنتی'),
-                      ontap: () {},
+                      ontap: () async {
+                        await launchUrl(
+                          mode: LaunchMode.externalApplication,
+                          Uri.parse(
+                              'http://expertdevelopers.ir/payment?order_id=5143'),
+                        );
+                      },
                     ),
                   ),
                   const SizedBox(width: 20),

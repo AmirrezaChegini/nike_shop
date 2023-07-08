@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nike_shop/constants/my_color.dart';
 import 'package:nike_shop/models/cart.dart';
 import 'package:nike_shop/utils/extensions/discount_price.dart';
+import 'package:nike_shop/utils/extensions/total_price.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
 class ShoppingDetail extends StatelessWidget {
@@ -13,10 +14,6 @@ class ShoppingDetail extends StatelessWidget {
 
   final List<Cart> cartList;
   final double bottom;
-
-  int totalPrice() {
-    return cartList.fold(0, (i, e) => i + (e.price * e.count));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +38,7 @@ class ShoppingDetail extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                   Text(
-                    '${'${totalPrice()}'.toPersianDigit().seRagham()} تومان',
+                    '${'${cartList.getTotalPrice()}'.toPersianDigit().seRagham()} تومان',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -60,7 +57,9 @@ class ShoppingDetail extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                   Text(
-                    '${totalPrice().discount()}'.toPersianDigit().seRagham(),
+                    '${cartList.getTotalPrice().discount()}'
+                        .toPersianDigit()
+                        .seRagham(),
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -79,7 +78,7 @@ class ShoppingDetail extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                   Text(
-                    '${'${totalPrice() + totalPrice().discount()}'.toPersianDigit().seRagham()} تومان',
+                    '${'${cartList.getTotalPrice() + cartList.getTotalPrice().discount()}'.toPersianDigit().seRagham()} تومان',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

@@ -5,7 +5,12 @@ import 'package:nike_shop/widgets/my_appbar.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
 class RecieptPaymentPage extends StatelessWidget {
-  const RecieptPaymentPage({super.key});
+  const RecieptPaymentPage({
+    super.key,
+    required this.paymentPrice,
+  });
+
+  final int paymentPrice;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +48,7 @@ class RecieptPaymentPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('مبلغ'),
-                  Text('${'20000000'.toPersianDigit().seRagham()} تومان'),
+                  Text('${'$paymentPrice'.toPersianDigit().seRagham()} تومان'),
                 ],
               ),
               const Divider(),
