@@ -6,7 +6,7 @@ import 'package:nike_shop/bloc/auth/auth_state.dart';
 import 'package:nike_shop/bloc/cart/cart_bloc.dart';
 import 'package:nike_shop/bloc/cart/cart_event.dart';
 import 'package:nike_shop/constants/my_color.dart';
-import 'package:nike_shop/cubit/auth_cubit.dart';
+import 'package:nike_shop/cubit/profile_cubit.dart';
 import 'package:nike_shop/cubit/edt_pass_cubti.dart';
 import 'package:nike_shop/widgets/edt_text.dart';
 import 'package:nike_shop/pages/auth/widgets/text_btn.dart';
@@ -185,7 +185,7 @@ class _AuthPageState extends State<AuthPage> {
                     }
 
                     if (state is CompletedLoginState) {
-                      BlocProvider.of<AuthCubit>(context).isLoggedIn(true);
+                      BlocProvider.of<NavigatorCubit>(context).navigate(1);
                       BlocProvider.of<CartBloc>(context).add(GetAllCartEvent());
                     }
                   },

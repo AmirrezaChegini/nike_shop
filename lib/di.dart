@@ -5,7 +5,7 @@ import 'package:nike_shop/bloc/cart/cart_bloc.dart';
 import 'package:nike_shop/bloc/comment/comment_bloc.dart';
 import 'package:nike_shop/bloc/home/home_bloc.dart';
 import 'package:nike_shop/bloc/product/product_bloc.dart';
-import 'package:nike_shop/cubit/auth_cubit.dart';
+import 'package:nike_shop/cubit/profile_cubit.dart';
 import 'package:nike_shop/cubit/bottom_navbar_cubit.dart';
 import 'package:nike_shop/cubit/edt_pass_cubti.dart';
 import 'package:nike_shop/cubit/fab_cubit.dart';
@@ -56,7 +56,7 @@ Future<void> initLocator() async {
   locator.registerSingleton<EdtPassCubit>(EdtPassCubit());
   locator.registerSingleton<BottomNavbarCubit>(BottomNavbarCubit());
   locator.registerSingleton<TypeProductCubit>(TypeProductCubit());
-  locator.registerSingleton<AuthCubit>(AuthCubit());
+  locator.registerSingleton<NavigatorCubit>(NavigatorCubit());
   locator.registerSingleton<FabProductCubit>(FabProductCubit());
   locator.registerSingleton<FabShopCubit>(FabShopCubit());
 

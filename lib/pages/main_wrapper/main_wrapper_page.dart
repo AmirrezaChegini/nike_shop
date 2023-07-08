@@ -5,9 +5,11 @@ import 'package:nike_shop/bloc/cart/cart_bloc.dart';
 import 'package:nike_shop/bloc/cart/cart_event.dart';
 import 'package:nike_shop/bloc/home/home_bloc.dart';
 import 'package:nike_shop/bloc/home/home_event.dart';
-import 'package:nike_shop/cubit/auth_cubit.dart';
+import 'package:nike_shop/cubit/profile_cubit.dart';
 import 'package:nike_shop/cubit/bottom_navbar_cubit.dart';
 import 'package:nike_shop/pages/auth/auth_page.dart';
+import 'package:nike_shop/pages/favorite/favorite_page.dart';
+import 'package:nike_shop/pages/history_payment/history_payment_page.dart';
 import 'package:nike_shop/pages/home/home_page.dart';
 import 'package:nike_shop/pages/main_wrapper/widgets/bottom_navbar.dart';
 import 'package:nike_shop/pages/profile/profile_page.dart';
@@ -49,9 +51,14 @@ class _MainWrapperPageState extends State<MainWrapperPage> {
             children: [
               HomePage(),
               const ShoppingPage(),
-              BlocBuilder<AuthCubit, bool>(
-                builder: (context, state) =>
-                    state ? const ProfilePage() : const AuthPage(),
+              BlocBuilder<NavigatorCubit, int>(
+                builder: (context, state) => state == 1
+                    ? const ProfilePage()
+                    : state == 2
+                        ? const FavoritePage()
+                        : state == 3
+                            ? const HistoryPaymentPage()
+                            : const AuthPage(),
               ),
             ],
           ),
