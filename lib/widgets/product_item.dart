@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nike_shop/bloc/comment/comment_bloc.dart';
 import 'package:nike_shop/bloc/comment/comment_event.dart';
-import 'package:nike_shop/constants/my_color.dart';
+import 'package:nike_shop/cubit/favorite_cubit.dart';
 import 'package:nike_shop/models/product.dart';
 import 'package:nike_shop/pages/product/product_page.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
@@ -18,7 +18,7 @@ class ProductItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         BlocProvider.of<CommentBloc>(context).add(CommentEvent(product.id));
-
+        BlocProvider.of<FavoriteCubit>(context).checkFavorite(product);
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -34,31 +34,12 @@ class ProductItem extends StatelessWidget {
           children: [
             Expanded(
               flex: 6,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: CachedNetworkImage(
-                      imageUrl: product.image,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Positioned(
-                    top: 10,
-                    right: 10,
-                    child: Container(
-                      padding: const EdgeInsets.all(5),
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: MyColor.white,
-                      ),
-                      child: const Icon(
-                        Icons.favorite_border_outlined,
-                      ),
-                    ),
-                  )
-                ],
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: CachedNetworkImage(
+                  imageUrl: product.image,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Expanded(

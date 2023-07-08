@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nike_shop/bloc/favoirte_product/favorite_product_bloc.dart';
+import 'package:nike_shop/bloc/favoirte_product/favorite_product_event.dart';
 
 import 'package:nike_shop/constants/my_color.dart';
 import 'package:nike_shop/cubit/profile_cubit.dart';
@@ -55,6 +57,8 @@ class ProfilePage extends StatelessWidget {
             const Divider(),
             TextButton.icon(
               onPressed: () {
+                BlocProvider.of<FavoriteProductBloc>(context)
+                    .add(GetAllFavoriteProducts());
                 BlocProvider.of<NavigatorCubit>(context).navigate(2);
               },
               icon: const Icon(Icons.favorite_border_outlined),

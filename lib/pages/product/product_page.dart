@@ -103,7 +103,7 @@ class _ProductPageState extends State<ProductPage> {
               controller: _scrollCtrl,
               headerSliverBuilder: (context, innerBoxIsScrolled) => [
                 ProductAppBar(
-                  image: widget.product.image,
+                  product: widget.product,
                 ),
               ],
               body: Container(

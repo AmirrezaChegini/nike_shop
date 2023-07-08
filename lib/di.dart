@@ -3,8 +3,10 @@ import 'package:get_it/get_it.dart';
 import 'package:nike_shop/bloc/auth/auth_bloc.dart';
 import 'package:nike_shop/bloc/cart/cart_bloc.dart';
 import 'package:nike_shop/bloc/comment/comment_bloc.dart';
+import 'package:nike_shop/bloc/favoirte_product/favorite_product_bloc.dart';
 import 'package:nike_shop/bloc/home/home_bloc.dart';
 import 'package:nike_shop/bloc/product/product_bloc.dart';
+import 'package:nike_shop/cubit/favorite_cubit.dart';
 import 'package:nike_shop/cubit/profile_cubit.dart';
 import 'package:nike_shop/cubit/bottom_navbar_cubit.dart';
 import 'package:nike_shop/cubit/edt_pass_cubti.dart';
@@ -13,11 +15,13 @@ import 'package:nike_shop/cubit/type_product_cubit.dart';
 import 'package:nike_shop/data/datasource/auth_datasource.dart';
 import 'package:nike_shop/data/datasource/banner_datasource.dart';
 import 'package:nike_shop/data/datasource/cart_datasource.dart';
+import 'package:nike_shop/data/datasource/favorite_product_datasource.dart';
 import 'package:nike_shop/data/datasource/product_comment_datasource.dart';
 import 'package:nike_shop/data/datasource/products_datasource.dart';
 import 'package:nike_shop/data/repositories/auth_repository.dart';
 import 'package:nike_shop/data/repositories/banner_repository.dart';
 import 'package:nike_shop/data/repositories/cart_repository.dart';
+import 'package:nike_shop/data/repositories/favorite_product_repository.dart';
 import 'package:nike_shop/data/repositories/product_comment_repository.dart';
 import 'package:nike_shop/data/repositories/products_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,6 +46,7 @@ Future<void> initLocator() async {
   locator.registerSingleton<ProductCommentDatasource>(
       ProductCommentRemote(locator.get()));
   locator.registerSingleton<CartDatasource>(CartRemote(locator.get()));
+  locator.registerSingleton<FavoriteProductDatasource>(FavoriteProductLocal());
 
   //* repositories
   locator.registerSingleton<IBannerRepository>(BannerRepository(locator.get()));
@@ -51,6 +56,8 @@ Future<void> initLocator() async {
   locator.registerSingleton<IProductCommentRepository>(
       ProductCommentRepository(locator.get()));
   locator.registerSingleton<ICartRepository>(CartRepositoy(locator.get()));
+  locator.registerSingleton<IFavoriteProductRepository>(
+      FavoriteProductRepository(locator.get()));
 
   //cubit
   locator.registerSingleton<EdtPassCubit>(EdtPassCubit());
@@ -59,6 +66,7 @@ Future<void> initLocator() async {
   locator.registerSingleton<NavigatorCubit>(NavigatorCubit());
   locator.registerSingleton<FabProductCubit>(FabProductCubit());
   locator.registerSingleton<FabShopCubit>(FabShopCubit());
+  locator.registerSingleton<FavoriteCubit>(FavoriteCubit(locator.get()));
 
   //bloc
   locator.registerSingleton<HomeBloc>(HomeBloc(locator.get(), locator.get()));
@@ -67,4 +75,6 @@ Future<void> initLocator() async {
   locator.registerSingleton<RegisterAuthBloc>(RegisterAuthBloc(locator.get()));
   locator.registerSingleton<CommentBloc>(CommentBloc(locator.get()));
   locator.registerSingleton<CartBloc>(CartBloc(locator.get()));
+  locator.registerSingleton<FavoriteProductBloc>(
+      FavoriteProductBloc(locator.get(), locator.get()));
 }

@@ -1,11 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nike_shop/bloc/favoirte_product/favorite_product_bloc.dart';
+import 'package:nike_shop/bloc/favoirte_product/favorite_product_event.dart';
 import 'package:nike_shop/constants/my_color.dart';
+import 'package:nike_shop/cubit/favorite_cubit.dart';
+import 'package:nike_shop/models/product.dart';
 
 class ProductAppBar extends StatelessWidget {
-  const ProductAppBar({super.key, this.image = 'assets/images/nike_logo.png'});
+  const ProductAppBar({super.key, required this.product});
 
-  final String image;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -14,17 +19,30 @@ class ProductAppBar extends StatelessWidget {
       expandedHeight: 230,
       backgroundColor: MyColor.transparent,
       foregroundColor: MyColor.black,
-      actions: const [
+      actions: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Icon(Icons.favorite_border),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: GestureDetector(
+            onTap: () {
+              BlocProvider.of<FavoriteProductBloc>(context)
+                  .add(FavoriteProductAction(product));
+            },
+            child: BlocBuilder<FavoriteCubit, bool>(
+              builder: (context, state) => state == true
+                  ? const Icon(
+                      Icons.favorite,
+                      color: MyColor.blue,
+                    )
+                  : const Icon(Icons.favorite_border),
+            ),
+          ),
         ),
       ],
       automaticallyImplyLeading: false,
       leading: const BackButton(),
       flexibleSpace: FlexibleSpaceBar(
         background: CachedNetworkImage(
-          imageUrl: image,
+          imageUrl: product.image,
           fit: BoxFit.cover,
         ),
       ),

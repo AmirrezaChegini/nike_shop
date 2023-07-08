@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'favorite_product.dart';
+part of 'product.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class FavoriteProductAdapter extends TypeAdapter<FavoriteProduct> {
+class ProductAdapter extends TypeAdapter<Product> {
   @override
   final int typeId = 0;
 
   @override
-  FavoriteProduct read(BinaryReader reader) {
+  Product read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return FavoriteProduct(
+    return Product(
       fields[0] as int,
       fields[1] as String,
       fields[2] as int,
@@ -27,21 +27,21 @@ class FavoriteProductAdapter extends TypeAdapter<FavoriteProduct> {
   }
 
   @override
-  void write(BinaryWriter writer, FavoriteProduct obj) {
+  void write(BinaryWriter writer, Product obj) {
     writer
       ..writeByte(6)
       ..writeByte(0)
-      ..write(obj.id)
+      ..write(obj._id)
       ..writeByte(1)
-      ..write(obj.title)
+      ..write(obj._title)
       ..writeByte(2)
-      ..write(obj.price)
+      ..write(obj._price)
       ..writeByte(3)
-      ..write(obj.discount)
+      ..write(obj._discount)
       ..writeByte(4)
-      ..write(obj.image)
+      ..write(obj._image)
       ..writeByte(5)
-      ..write(obj.prePrice);
+      ..write(obj._prePrice);
   }
 
   @override
@@ -50,7 +50,7 @@ class FavoriteProductAdapter extends TypeAdapter<FavoriteProduct> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is FavoriteProductAdapter &&
+      other is ProductAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
