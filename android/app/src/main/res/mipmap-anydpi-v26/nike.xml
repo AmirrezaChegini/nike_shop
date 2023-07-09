@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+  <background android:drawable="@mipmap/nike_background"/>
+  <foreground android:drawable="@mipmap/nike_foreground"/>
+  <monochrome android:drawable="@mipmap/nike_monochrome"/>
+</adaptive-icon>
