@@ -27,7 +27,7 @@ class ProductsRemote implements ProductsDatasource {
           response.data.map<Product>((e) => Product.fromMapJson(e)).toList();
 
       return productList;
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       e.response == null
           ? throw FetchDataEx()
           : throw CheckExceptions.validate(e.response!);

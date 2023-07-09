@@ -22,7 +22,7 @@ class BannerRemote implements BannerDatasource {
           response.data.map<MyBanner>((e) => MyBanner.fromMapJson(e)).toList();
 
       return banners;
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       e.response == null
           ? throw FetchDataEx()
           : throw CheckExceptions.validate(e.response!);

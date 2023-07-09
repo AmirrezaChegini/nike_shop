@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nike_shop/bloc/cart/cart_bloc.dart';
 import 'package:nike_shop/bloc/cart/cart_event.dart';
 import 'package:nike_shop/bloc/cart/cart_state.dart';
+
 import 'package:nike_shop/constants/my_color.dart';
 import 'package:nike_shop/cubit/fab_cubit.dart';
 import 'package:nike_shop/pages/address/address_page.dart';

@@ -7,6 +7,7 @@ import 'package:nike_shop/bloc/cart/cart_bloc.dart';
 import 'package:nike_shop/bloc/comment/comment_bloc.dart';
 import 'package:nike_shop/bloc/favoirte_product/favorite_product_bloc.dart';
 import 'package:nike_shop/bloc/home/home_bloc.dart';
+import 'package:nike_shop/bloc/payment/payment_bloc.dart';
 import 'package:nike_shop/bloc/product/product_bloc.dart';
 import 'package:nike_shop/configs/my_theme.dart';
 import 'package:nike_shop/cubit/favorite_cubit.dart';
@@ -48,6 +49,7 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => locator.get<CommentBloc>()),
         BlocProvider(create: (context) => locator.get<CartBloc>()),
         BlocProvider(create: (context) => locator.get<FavoriteProductBloc>()),
+        BlocProvider(create: (context) => locator.get<PaymentBloc>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

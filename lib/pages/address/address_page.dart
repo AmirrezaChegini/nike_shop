@@ -1,26 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nike_shop/bloc/payment/payment_bloc.dart';
+import 'package:nike_shop/bloc/payment/payment_event.dart';
+import 'package:nike_shop/bloc/payment/payment_state.dart';
 import 'package:nike_shop/constants/my_color.dart';
 import 'package:nike_shop/models/cart.dart';
+import 'package:nike_shop/models/payment_type.dart';
 import 'package:nike_shop/pages/auth/widgets/text_btn.dart';
 import 'package:nike_shop/pages/reciept_payment/reciept_payment.dart';
 import 'package:nike_shop/pages/shopping/widgets/shopping_detail.dart';
+import 'package:nike_shop/utils/extensions/discount_price.dart';
 import 'package:nike_shop/utils/extensions/total_price.dart';
 import 'package:nike_shop/widgets/edt_text.dart';
+import 'package:nike_shop/widgets/loading_anim.dart';
 import 'package:nike_shop/widgets/my_appbar.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
-class AddressPage extends StatelessWidget {
-  AddressPage({
+class AddressPage extends StatefulWidget {
+  const AddressPage({
     super.key,
     required this.cartList,
   });
   final List<Cart> cartList;
+
+  @override
+  State<AddressPage> createState() => _AddressPageState();
+}
+
+class _AddressPageState extends State<AddressPage> {
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
   String name = '';
   String postalCode = '';
   String phone = '';
   String address = '';
+
+  @override
+  void initState() {
+    super.initState();
+
+    BlocProvider.of<PaymentBloc>(context).add(InitPaymentEvent(
+        widget.cartList.getTotalPrice() +
+            widget.cartList.getTotalPrice().discount()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +122,7 @@ class AddressPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              ShoppingDetail(cartList: cartList),
+              ShoppingDetail(cartList: widget.cartList),
               const SizedBox(height: 10),
               Row(
                 children: [
@@ -110,19 +131,21 @@ class AddressPage extends StatelessWidget {
                     child: TextBtn(
                       backgroundColor: MyColor.white,
                       foregroundColor: MyColor.blue,
+                      height: 50,
                       radius: 5,
                       child: const Text('پرداخت در محل'),
                       ontap: () {
-                        if (_globalKey.currentState!.validate()) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => RecieptPaymentPage(
-                                paymentPrice: cartList.getTotalPrice(),
-                              ),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RecieptPaymentPage(
+                              paymentPrice: widget.cartList.getTotalPrice() +
+                                  widget.cartList.getTotalPrice().discount(),
+                              paymentType: PaymentType.waiting,
+                              message: 'پرداخت با موفقیت انجام شد',
                             ),
-                          );
-                        }
+                          ),
+                        );
                       },
                     ),
                   ),
@@ -131,14 +154,45 @@ class AddressPage extends StatelessWidget {
                     child: TextBtn(
                       backgroundColor: MyColor.blue,
                       foregroundColor: MyColor.white,
+                      height: 50,
                       radius: 5,
-                      child: const Text('پرداخت اینترنتی'),
+                      child: BlocConsumer<PaymentBloc, PaymentState>(
+                        listener: (context, state) {
+                          if (state is CompletedPaymentState) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RecieptPaymentPage(
+                                    paymentPrice:
+                                        widget.cartList.getTotalPrice() +
+                                            widget.cartList
+                                                .getTotalPrice()
+                                                .discount(),
+                                    message: state.message,
+                                    paymentType: state.paymentType),
+                              ),
+                            );
+                          }
+                        },
+                        builder: (context, state) {
+                          if (state is InitPaymentState) {
+                            return const Text('پرداخت اینترنتی');
+                          }
+
+                          if (state is LoadingPaymentState) {
+                            return const LoadingAnim(color: MyColor.white);
+                          }
+
+                          if (state is CompletedPaymentState) {
+                            return const Text('پرداخت اینترنتی');
+                          }
+
+                          return const SizedBox();
+                        },
+                      ),
                       ontap: () async {
-                        await launchUrl(
-                          mode: LaunchMode.externalApplication,
-                          Uri.parse(
-                              'http://expertdevelopers.ir/payment?order_id=5143'),
-                        );
+                        BlocProvider.of<PaymentBloc>(context)
+                            .add(SendPaymentEvent());
                       },
                     ),
                   ),

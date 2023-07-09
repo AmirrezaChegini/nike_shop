@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nike_shop/constants/my_color.dart';
+import 'package:nike_shop/models/payment_type.dart';
 import 'package:nike_shop/pages/auth/widgets/text_btn.dart';
 import 'package:nike_shop/widgets/my_appbar.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
@@ -8,9 +9,13 @@ class RecieptPaymentPage extends StatelessWidget {
   const RecieptPaymentPage({
     super.key,
     required this.paymentPrice,
+    required this.message,
+    required this.paymentType,
   });
 
   final int paymentPrice;
+  final String message;
+  final PaymentType paymentType;
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +31,9 @@ class RecieptPaymentPage extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 30),
-              const Text(
-                'پرداخت با موفقیت انجام شد',
-                style: TextStyle(
+              Text(
+                message,
+                style: const TextStyle(
                   fontSize: 20,
                   color: MyColor.blue,
                   fontWeight: FontWeight.bold,
@@ -37,9 +42,13 @@ class RecieptPaymentPage extends StatelessWidget {
               const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text('وضعیت سفارش'),
-                  Text('پرداخت شده'),
+                children: [
+                  const Text('وضعیت سفارش'),
+                  Text(paymentType == PaymentType.success
+                      ? 'انجام شده'
+                      : paymentType == PaymentType.waiting
+                          ? 'در انتظار تایید'
+                          : 'ناموفق'),
                 ],
               ),
               const Divider(),

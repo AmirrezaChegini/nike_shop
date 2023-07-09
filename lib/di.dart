@@ -5,6 +5,7 @@ import 'package:nike_shop/bloc/cart/cart_bloc.dart';
 import 'package:nike_shop/bloc/comment/comment_bloc.dart';
 import 'package:nike_shop/bloc/favoirte_product/favorite_product_bloc.dart';
 import 'package:nike_shop/bloc/home/home_bloc.dart';
+import 'package:nike_shop/bloc/payment/payment_bloc.dart';
 import 'package:nike_shop/bloc/product/product_bloc.dart';
 import 'package:nike_shop/cubit/favorite_cubit.dart';
 import 'package:nike_shop/cubit/profile_cubit.dart';
@@ -24,7 +25,9 @@ import 'package:nike_shop/data/repositories/cart_repository.dart';
 import 'package:nike_shop/data/repositories/favorite_product_repository.dart';
 import 'package:nike_shop/data/repositories/product_comment_repository.dart';
 import 'package:nike_shop/data/repositories/products_repository.dart';
+import 'package:nike_shop/services/payment_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zarinpal/zarinpal.dart';
 
 var locator = GetIt.I;
 
@@ -33,11 +36,13 @@ Future<void> initLocator() async {
   locator.registerSingleton<Dio>(Dio(
     BaseOptions(
       baseUrl: 'http://expertdevelopers.ir/api/v1/',
-      connectTimeout: const Duration(seconds: 5),
+      connectTimeout: 5000,
     ),
   ));
   locator.registerSingleton<SharedPreferences>(
       await SharedPreferences.getInstance());
+  locator.registerSingleton<PaymentRequest>(PaymentRequest());
+  locator.registerSingleton<PaymentService>(ZarinpalPayment(locator.get()));
 
   //* datasources
   locator.registerSingleton<BannerDatasource>(BannerRemote(locator.get()));
@@ -77,4 +82,5 @@ Future<void> initLocator() async {
   locator.registerSingleton<CartBloc>(CartBloc(locator.get()));
   locator.registerSingleton<FavoriteProductBloc>(
       FavoriteProductBloc(locator.get(), locator.get()));
+  locator.registerSingleton<PaymentBloc>(PaymentBloc(locator.get()));
 }

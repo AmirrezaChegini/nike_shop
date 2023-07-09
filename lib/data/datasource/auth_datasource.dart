@@ -26,7 +26,7 @@ class AuthRemote implements AuthDatasource {
           'password': password,
         },
       );
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       e.response == null
           ? throw FetchDataEx()
           : throw CheckExceptions.validate(e.response!);
@@ -53,7 +53,7 @@ class AuthRemote implements AuthDatasource {
       );
 
       return authToken;
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       e.response == null
           ? throw FetchDataEx()
           : throw CheckExceptions.validate(e.response!);
@@ -79,7 +79,7 @@ class AuthRemote implements AuthDatasource {
       );
 
       return authToken;
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       e.response == null
           ? throw FetchDataEx()
           : throw CheckExceptions.validate(e.response!);

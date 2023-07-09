@@ -32,7 +32,7 @@ class CartRemote implements CartDatasource {
           'product_id': productId,
         },
       );
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       e.response == null
           ? throw FetchDataEx()
           : throw CheckExceptions.validate(e.response!);
@@ -54,7 +54,7 @@ class CartRemote implements CartDatasource {
           'cart_item_id': cartId,
         },
       );
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       e.response == null
           ? throw FetchDataEx()
           : throw CheckExceptions.validate(e.response!);
@@ -78,7 +78,7 @@ class CartRemote implements CartDatasource {
           'count': count,
         },
       );
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       e.response == null
           ? throw FetchDataEx()
           : throw CheckExceptions.validate(e.response!);
@@ -103,7 +103,7 @@ class CartRemote implements CartDatasource {
           .toList();
 
       return carts;
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       e.response == null
           ? throw FetchDataEx()
           : throw CheckExceptions.validate(e.response!);

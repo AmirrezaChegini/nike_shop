@@ -11,7 +11,7 @@ dependencies:
   cached_network_image: ^3.2.3
   cupertino_icons: ^1.0.5
   dartz: ^0.10.1
-  dio: ^5.2.0+1
+  dio: ^4.0.0
   equatable: ^2.0.5
   expandable: ^5.0.1
   flutter:
@@ -28,6 +28,7 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   uni_links: ^0.5.1
   url_launcher: ^6.1.11
+  zarinpal: ^1.0.4+1
 
 dev_dependencies:
   flutter_test:

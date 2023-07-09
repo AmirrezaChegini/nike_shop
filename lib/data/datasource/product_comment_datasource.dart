@@ -26,7 +26,7 @@ class ProductCommentRemote implements ProductCommentDatasource {
           .toList();
 
       return productComments;
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       e.response == null
           ? throw FetchDataEx()
           : throw CheckExceptions.validate(e.response!);
