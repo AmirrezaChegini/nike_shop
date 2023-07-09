@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:nike_shop/models/payment_type.dart';
+import 'package:nike_shop/models/paymenttype.dart';
 
 abstract class PaymentState extends Equatable {}
 

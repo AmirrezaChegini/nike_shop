@@ -1,10 +1,22 @@
+import 'package:hive/hive.dart';
+
+part 'cart.g.dart';
+
+@HiveType(typeId: 2)
 class Cart {
+  @HiveField(0)
   int _cartId;
+  @HiveField(1)
   int _id;
+  @HiveField(2)
   String _title;
+  @HiveField(3)
   int _price;
+  @HiveField(4)
   int _discount;
+  @HiveField(5)
   String _image;
+  @HiveField(6)
   int _count;
 
   Cart(

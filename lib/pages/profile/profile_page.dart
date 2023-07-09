@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nike_shop/bloc/favoirte_product/favorite_product_bloc.dart';
 import 'package:nike_shop/bloc/favoirte_product/favorite_product_event.dart';
+import 'package:nike_shop/bloc/order/order_bloc.dart';
+import 'package:nike_shop/bloc/order/order_event.dart';
 
 import 'package:nike_shop/constants/my_color.dart';
 import 'package:nike_shop/cubit/profile_cubit.dart';
@@ -73,6 +75,7 @@ class ProfilePage extends StatelessWidget {
             const Divider(),
             TextButton.icon(
               onPressed: () {
+                BlocProvider.of<OrderBloc>(context).add(GetOrdersEvent());
                 BlocProvider.of<NavigatorCubit>(context).navigate(3);
               },
               icon: const Icon(Icons.archive_outlined),

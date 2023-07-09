@@ -6,3 +6,10 @@ class InitPaymentEvent extends PaymentEvent {
 }
 
 class SendPaymentEvent extends PaymentEvent {}
+
+class VerifyPaymentEvent extends PaymentEvent {
+  String status;
+  String authority;
+
+  VerifyPaymentEvent(this.status, this.authority);
+}

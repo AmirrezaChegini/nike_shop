@@ -1,19 +1,25 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nike_shop/bloc/order/order_bloc.dart';
+import 'package:nike_shop/bloc/order/order_event.dart';
 import 'package:nike_shop/bloc/payment/payment_bloc.dart';
 import 'package:nike_shop/bloc/payment/payment_event.dart';
 import 'package:nike_shop/bloc/payment/payment_state.dart';
 import 'package:nike_shop/constants/my_color.dart';
 import 'package:nike_shop/models/cart.dart';
-import 'package:nike_shop/models/payment_type.dart';
+import 'package:nike_shop/models/order.dart';
+import 'package:nike_shop/models/paymenttype.dart';
 import 'package:nike_shop/pages/auth/widgets/text_btn.dart';
 import 'package:nike_shop/pages/reciept_payment/reciept_payment.dart';
 import 'package:nike_shop/pages/shopping/widgets/shopping_detail.dart';
 import 'package:nike_shop/utils/extensions/discount_price.dart';
+import 'package:nike_shop/utils/extensions/payment_res.dart';
 import 'package:nike_shop/utils/extensions/total_price.dart';
 import 'package:nike_shop/widgets/edt_text.dart';
 import 'package:nike_shop/widgets/loading_anim.dart';
 import 'package:nike_shop/widgets/my_appbar.dart';
+import 'package:uni_links/uni_links.dart';
 
 // ignore: must_be_immutable
 class AddressPage extends StatefulWidget {
@@ -33,14 +39,26 @@ class _AddressPageState extends State<AddressPage> {
   String postalCode = '';
   String phone = '';
   String address = '';
+  int totalPrice = 0;
+  late StreamSubscription<String?> subscription;
 
   @override
   void initState() {
     super.initState();
+    totalPrice = widget.cartList.getTotalPrice() +
+        widget.cartList.getTotalPrice().discount();
 
-    BlocProvider.of<PaymentBloc>(context).add(InitPaymentEvent(
-        widget.cartList.getTotalPrice() +
-            widget.cartList.getTotalPrice().discount()));
+    BlocProvider.of<PaymentBloc>(context).add(InitPaymentEvent(totalPrice));
+    subscription = linkStream.listen((deepLink) {
+      BlocProvider.of<PaymentBloc>(context).add(
+          VerifyPaymentEvent(deepLink!.getStatus(), deepLink.getAuthority()));
+    });
+  }
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
   }
 
   @override
@@ -135,17 +153,25 @@ class _AddressPageState extends State<AddressPage> {
                       radius: 5,
                       child: const Text('پرداخت در محل'),
                       ontap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RecieptPaymentPage(
-                              paymentPrice: widget.cartList.getTotalPrice() +
-                                  widget.cartList.getTotalPrice().discount(),
-                              paymentType: PaymentType.waiting,
-                              message: 'پرداخت با موفقیت انجام شد',
+                        if (_globalKey.currentState!.validate()) {
+                          BlocProvider.of<OrderBloc>(context)
+                              .add(AddOrderEvent(Order(
+                            PaymentType.waiting,
+                            totalPrice,
+                            widget.cartList,
+                          )));
+
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RecieptPaymentPage(
+                                paymentPrice: totalPrice,
+                                paymentType: PaymentType.waiting,
+                                message: 'پرداخت با موفقیت انجام شد',
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        }
                       },
                     ),
                   ),
@@ -159,17 +185,24 @@ class _AddressPageState extends State<AddressPage> {
                       child: BlocConsumer<PaymentBloc, PaymentState>(
                         listener: (context, state) {
                           if (state is CompletedPaymentState) {
+                            BlocProvider.of<OrderBloc>(context).add(
+                              AddOrderEvent(
+                                Order(
+                                  state.paymentType,
+                                  totalPrice,
+                                  widget.cartList,
+                                ),
+                              ),
+                            );
+
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => RecieptPaymentPage(
-                                    paymentPrice:
-                                        widget.cartList.getTotalPrice() +
-                                            widget.cartList
-                                                .getTotalPrice()
-                                                .discount(),
-                                    message: state.message,
-                                    paymentType: state.paymentType),
+                                  paymentPrice: totalPrice,
+                                  message: state.message,
+                                  paymentType: state.paymentType,
+                                ),
                               ),
                             );
                           }
@@ -190,9 +223,11 @@ class _AddressPageState extends State<AddressPage> {
                           return const SizedBox();
                         },
                       ),
-                      ontap: () async {
-                        BlocProvider.of<PaymentBloc>(context)
-                            .add(SendPaymentEvent());
+                      ontap: () {
+                        if (_globalKey.currentState!.validate()) {
+                          BlocProvider.of<PaymentBloc>(context)
+                              .add(SendPaymentEvent());
+                        }
                       },
                     ),
                   ),
