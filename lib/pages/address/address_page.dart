@@ -135,7 +135,7 @@ class _AddressPageState extends State<AddressPage> {
                       radius: 5,
                       child: const Text('پرداخت در محل'),
                       ontap: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) => RecieptPaymentPage(

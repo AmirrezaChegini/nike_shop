@@ -81,7 +81,9 @@ class RecieptPaymentPage extends StatelessWidget {
                       foregroundColor: MyColor.white,
                       radius: 5,
                       child: const Text(' صفحه اصلی'),
-                      ontap: () {},
+                      ontap: () {
+                        Navigator.pop(context);
+                      },
                     ),
                   ),
                   const SizedBox(width: 20),
