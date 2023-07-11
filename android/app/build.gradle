@@ -43,7 +43,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.nike_shop"
+        applicationId "com.amirrezagu.nike_shop"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
