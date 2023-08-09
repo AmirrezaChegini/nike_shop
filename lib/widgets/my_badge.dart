@@ -15,11 +15,11 @@ class MyBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Badge(
-      alignment: const AlignmentDirectional(-2, -2),
       backgroundColor: MyColor.blue,
       isLabelVisible: true,
-      padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 4),
+      padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
       largeSize: 17,
+      offset: const Offset(15, -3),
       label: Text(
         label.toPersianDigit(),
         style: const TextStyle(

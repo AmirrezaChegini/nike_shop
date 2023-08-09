@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nike_shop/constants/my_color.dart';
 
-class MyAppbar extends StatelessWidget with PreferredSizeWidget {
+class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppbar({
     super.key,
     required this.title,

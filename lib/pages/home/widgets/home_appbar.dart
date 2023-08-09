@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nike_shop/constants/my_color.dart';
 
-class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
+class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBar({super.key});
 
   @override
